@@ -26,18 +26,18 @@ class CameraBusiness {
       device: false,
       // [location, buffer, base64]
       // Webcam.CallbackReturnTypes
-      callbackReturn: "location",   
+      //callbackReturn: "location",   
       //callbackReturn: "base64",
-      //callbackReturn: "buffer",
+      callbackReturn: "buffer",
       verbose: true
     };
       
-    this.webcam = NodeWebcam.create(this.opts);
+    this.camera = NodeWebcam.create(this.opts);
   }
 
-  async snap() {
+  async snap(pictureName) {
     return new Promise((resolve, reject) => {
-      this.webcam.capture("test_picture", function(err, data) {
+      this.camera.capture(pictureName, function(err, data) {
         if (err)
           reject(err)
         else {

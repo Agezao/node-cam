@@ -1,3 +1,5 @@
 node_modules/
+photos/*
+!photos/.gitkeep
 config/index.js
 test_picture.png

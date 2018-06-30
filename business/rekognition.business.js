@@ -13,7 +13,7 @@ class RekognitionBusiness {
   }
 
   async IndexFace(imagePath, imageId) {
-    let image = fs.readFileSync('./' + imagePath, 'base64');
+    let image = fs.readFileSync('./photos/' + imagePath, 'base64');
     const buffer = new Buffer(image, 'base64');
 
     return this.rekognition.indexFaces({
@@ -22,6 +22,18 @@ class RekognitionBusiness {
           Bytes: buffer
         },
         ExternalImageId: imageId
+      }).promise();
+  }
+  
+  async MatchFace(imagePath) {
+    let image = fs.readFileSync('./photos/' + imagePath, 'base64');
+    const buffer = new Buffer(image, 'base64');
+
+    return this.rekognition.searchFacesByImage({
+        CollectionId: config.collectionId,
+        Image: {
+          Bytes: buffer
+        }
       }).promise();
   }
 }
