@@ -1,3 +1,4 @@
+const asciimo = require('asciimo').Figlet;
 //const CameraBusiness = require('./business/camera.business'); // CameraBusiness for webcam (should have same interface)
 const RaspistillBusiness = require('./business/raspistill.business'); // RaspistillBusiness for raspiberry cam (should have same interface)
 const RekognitionBusiness = require('./business/rekognition.business');
@@ -81,7 +82,12 @@ const run = async () => {
 	  console.log('Matching face on rekognition...');
       response = await rekognitionBusiness.MatchFace(pictureName);
       
-      console.log(response.FaceMatches);
+      if(response.FaceMatches[0]) {
+        asciimo.write("Authorized", "Banner", (art) => {console.log(art)});
+        asciimo.write(response.FaceMatches[0].Face.ExternalImageId, "Banner", (art) => {console.log(art)});
+      }
+      else
+		asciimo.write("Denied", "Banner", (art) => {console.log(art)});
       return;
     }
     
