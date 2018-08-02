@@ -1,50 +1,12 @@
 const config = require('../config');
-const NodeWebcam = require("node-webcam");
+const execa = require('execa');
 
 class CameraBusiness {
   
-  constructor() {
-    this.opts = {
-      //Picture related
-      width: 1600,
-      height: 900,
-      quality: 100,
-  
-      //Delay to take shot
-      delay: 0,
-  
-      //Save shots in memory      
-      saveShots: true,
-
-      // [jpeg, png] support varies
-      // Webcam.OutputTypes
-      output: "png",
-  
-      //Which camera to use
-      //Use Webcam.list() for results
-      //false for default device
-      device: false,
-      // [location, buffer, base64]
-      // Webcam.CallbackReturnTypes
-      //callbackReturn: "location",   
-      //callbackReturn: "base64",
-      callbackReturn: "buffer",
-      verbose: true
-    };
-      
-    this.camera = NodeWebcam.create(this.opts);
-  }
+  constructor() { }
 
   async snap(pictureName) {
-    return new Promise((resolve, reject) => {
-      this.camera.capture(pictureName, function(err, data) {
-        if (err)
-          reject(err)
-        else {
-          resolve(data)
-        }
-      });
-    });
+    return await execa('bin/ffmpeg.exe -f dshow -i video="Integrated Camera" -vframes 1 ' + ('photos/' + pictureName));
   }
 }
 
